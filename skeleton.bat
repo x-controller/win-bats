@@ -1,0 +1,1 @@
+docker run -v d:/code:/skeleton -p 9501:9501 -it --entrypoint /bin/sh hyperf/hyperf:7.4-alpine-v3.9-cli

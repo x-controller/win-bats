@@ -1,0 +1,14 @@
+sudo supervisord -c /etc/supervisord.d/supervisord.conf
+
+# 启动 hyperf 应用
+supervisorctl start hyperf
+# 重启 hyperf 应用
+supervisorctl restart hyperf
+# 停止 hyperf 应用
+supervisorctl stop hyperf  
+# 查看所有被管理项目运行状态
+supervisorctl status
+# 重新加载配置文件
+supervisorctl update
+# 重新启动所有程序
+supervisorctl reload
