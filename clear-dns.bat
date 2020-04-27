@@ -1,4 +1,4 @@
 @echo off
-title åˆ·æ–°DNSç¼“å­˜
+title Ë¢ÐÂDNS»º´æ
 ipconfig/flushdns
 pause
