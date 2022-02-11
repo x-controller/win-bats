@@ -5,9 +5,10 @@ set /p work_path=«Î ‰»Îƒø¬º:
 %PAN%:
 cd %work_path%
 for /d %%i in (*) do (
-  echo.
-  echo [%%i]
-  echo.
-  @cd %cd%\%%i && @git pull
+  @cd %cd%\%%i
+  IF EXIST .git (
+    echo [%%i]
+    @git pull
+  )
 )
 pause
