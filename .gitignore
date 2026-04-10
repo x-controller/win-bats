@@ -1,1 +1,45 @@
-/.idea
+```
+# Build artifacts
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.exe
+*.out
+
+# Go-specific
+*.test
+*.prof
+cover.out
+go/pkg/
+
+# Dependencies
+vendor/
+node_modules/
+bower_components/
+
+# Logs
+*.log
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+htmlcov/
+*.coverprofile
+```
