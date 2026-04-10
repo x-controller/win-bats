@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Tools GUI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #00d9ff;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+            border-color: #00d9ff;
+        }
+        
+        .panel {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 30px;
+            border-left: 4px solid #00d9ff;
+        }
+        
+        .panel.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00d9ff;
+            font-weight: bold;
+        }
+        
+        input[type="text"] {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #00d9ff;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            width: 100%;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+        }
+        
+        input[type="text"]::placeholder {
+            color: #888;
+        }
+        
+        button.action-btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        button.action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+        }
+        
+        button.action-btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .result.success {
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .result.error {
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .result.info {
+            border-left: 4px solid #00d9ff;
+        }
+        
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .script-display {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            max-height: 500px;
+            overflow-y: auto;
+            color: #d4d4d4;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ System Tools Collection</h1>
+        <p class="subtitle">All your favorite scripts integrated into one GUI application</p>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showPanel('dns')">DNS Cache</button>
+            <button class="tab-btn" onclick="showPanel('git')">Git Pull All</button>
+            <button class="tab-btn" onclick="showPanel('kill')">Kill Process</button>
+            <button class="tab-btn" onclick="showPanel('pid')">View PID</button>
+            <button class="tab-btn" onclick="showPanel('port')">View Port</button>
+            <button class="tab-btn" onclick="showPanel('laravel')">Laravel Queue</button>
+            <button class="tab-btn" onclick="showPanel('docker')">Docker Skeleton</button>
+            <button class="tab-btn" onclick="showPanel('supervisor')">Supervisor</button>
+            <button class="tab-btn" onclick="showPanel('fiddler')">Fiddler Script</button>
+            <button class="tab-btn" onclick="showPanel('system')">System Info</button>
+        </div>
+        
+        <!-- DNS Panel -->
+        <div id="dns-panel" class="panel active">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">Clear DNS Cache</h2>
+            <button class="action-btn" onclick="clearDNS()">Clear DNS Cache</button>
+            <div class="result info" id="dns-result">Click the button to clear DNS cache...</div>
+        </div>
+        
+        <!-- Git Pull All Panel -->
+        <div id="git-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">Git Pull All Repositories</h2>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group">
+                        <label>Disk (Windows only, e.g., D)</label>
+                        <input type="text" id="git-disk" placeholder="Enter disk letter">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        <label>Work Path</label>
+                        <input type="text" id="git-path" placeholder="Enter work directory path">
+                    </div>
+                </div>
+            </div>
+            <button class="action-btn" onclick="gitPullAll()">Run Git Pull</button>
+            <div class="result info" id="git-result">Enter disk and path, then click Run Git Pull...</div>
+        </div>
+        
+        <!-- Kill Process Panel -->
+        <div id="kill-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">Force Kill Process</h2>
+            <div class="input-group">
+                <label>PID (Process ID)</label>
+                <input type="text" id="kill-pid" placeholder="Enter process PID">
+            </div>
+            <button class="action-btn" onclick="killTaskForce()">Kill Process</button>
+            <div class="result info" id="kill-result">Enter a PID and click Kill Process...</div>
+        </div>
+        
+        <!-- View PID Panel -->
+        <div id="pid-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">View Process by PID</h2>
+            <div class="input-group">
+                <label>PID (Process ID)</label>
+                <input type="text" id="view-pid" placeholder="Enter process PID">
+            </div>
+            <button class="action-btn" onclick="viewPIDOccupied()">View Process</button>
+            <div class="result info" id="pid-result">Enter a PID and click View Process...</div>
+        </div>
+        
+        <!-- View Port Panel -->
+        <div id="port-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">View Processes Using Port</h2>
+            <div class="input-group">
+                <label>Port Number</label>
+                <input type="text" id="view-port" placeholder="Enter port number (e.g., 8080)">
+            </div>
+            <button class="action-btn" onclick="viewPortOccupied()">View Port Usage</button>
+            <div class="result info" id="port-result">Enter a port number and click View Port Usage...</div>
+        </div>
+        
+        <!-- Laravel Queue Panel -->
+        <div id="laravel-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">Laravel Queue Worker</h2>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group">
+                        <label>Disk (Windows only, e.g., D)</label>
+                        <input type="text" id="laravel-disk" placeholder="Enter disk letter">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        <label>Work Path</label>
+                        <input type="text" id="laravel-path" placeholder="Enter Laravel project path">
+                    </div>
+                </div>
+            </div>
+            <button class="action-btn" onclick="runLaravelQueue()">Run Schedule</button>
+            <div class="result info" id="laravel-result">Enter disk and path, then click Run Schedule...</div>
+        </div>
+        
+        <!-- Docker Skeleton Panel -->
+        <div id="docker-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">Hyperf Skeleton Docker</h2>
+            <button class="action-btn" onclick="runSkeletonDocker()">Get Docker Command</button>
+            <div class="result info" id="docker-result">Click the button to get the Docker command...</div>
+        </div>
+        
+        <!-- Supervisor Panel -->
+        <div id="supervisor-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">Supervisor Commands</h2>
+            <button class="action-btn" onclick="getSupervisorCommands()">Show Commands</button>
+            <div class="result info" id="supervisor-result">Click the button to view supervisor commands...</div>
+        </div>
+        
+        <!-- Fiddler Script Panel -->
+        <div id="fiddler-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">Fiddler Image Download Script</h2>
+            <button class="action-btn" onclick="getFiddlerScript()">Show Script</button>
+            <button class="action-btn copy-btn" onclick="copyFiddlerScript()">Copy Script</button>
+            <div class="script-display" id="fiddler-result" style="margin-top: 20px;">Click the button to view the Fiddler script...</div>
+        </div>
+        
+        <!-- System Info Panel -->
+        <div id="system-panel" class="panel">
+            <h2 style="color: #00d9ff; margin-bottom: 20px;">System Information</h2>
+            <button class="action-btn" onclick="getSystemInfo()">Get System Info</button>
+            <div class="result info" id="system-result">Click the button to view system information...</div>
+        </div>
+    </div>
+
+    <script>
+        const { main } = window.go.main;
+        
+        function showPanel(panelName) {
+            // Hide all panels
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            // Show selected panel
+            document.getElementById(panelName + '-panel').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function updateResult(elementId, result, isSuccess) {
+            const el = document.getElementById(elementId);
+            el.textContent = result.output || result.message;
+            el.className = 'result ' + (isSuccess ? 'success' : 'error');
+        }
+        
+        async function clearDNS() {
+            const resultDiv = document.getElementById('dns-result');
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Executing...</span>';
+            
+            try {
+                const result = await main.App.ClearDNS();
+                updateResult('dns-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function gitPullAll() {
+            const disk = document.getElementById('git-disk').value.trim();
+            const path = document.getElementById('git-path').value.trim();
+            const resultDiv = document.getElementById('git-result');
+            
+            if (!path) {
+                resultDiv.innerHTML = '<span style="color: #ff6b6b;">Please enter a work path!</span>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Executing...</span>';
+            
+            try {
+                const result = await main.App.GitPullAll(disk, path);
+                updateResult('git-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function killTaskForce() {
+            const pid = document.getElementById('kill-pid').value.trim();
+            const resultDiv = document.getElementById('kill-result');
+            
+            if (!pid) {
+                resultDiv.innerHTML = '<span style="color: #ff6b6b;">Please enter a PID!</span>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Executing...</span>';
+            
+            try {
+                const result = await main.App.KillTaskForce(pid);
+                updateResult('kill-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function viewPIDOccupied() {
+            const pid = document.getElementById('view-pid').value.trim();
+            const resultDiv = document.getElementById('pid-result');
+            
+            if (!pid) {
+                resultDiv.innerHTML = '<span style="color: #ff6b6b;">Please enter a PID!</span>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Executing...</span>';
+            
+            try {
+                const result = await main.App.ViewPIDOccupied(pid);
+                updateResult('pid-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function viewPortOccupied() {
+            const port = document.getElementById('view-port').value.trim();
+            const resultDiv = document.getElementById('port-result');
+            
+            if (!port) {
+                resultDiv.innerHTML = '<span style="color: #ff6b6b;">Please enter a port number!</span>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Executing...</span>';
+            
+            try {
+                const result = await main.App.ViewPortOccupied(port);
+                updateResult('port-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function runLaravelQueue() {
+            const disk = document.getElementById('laravel-disk').value.trim();
+            const path = document.getElementById('laravel-path').value.trim();
+            const resultDiv = document.getElementById('laravel-result');
+            
+            if (!path) {
+                resultDiv.innerHTML = '<span style="color: #ff6b6b;">Please enter a work path!</span>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Executing...</span>';
+            
+            try {
+                const result = await main.App.RunLaravelQueue(disk, path);
+                updateResult('laravel-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function runSkeletonDocker() {
+            const resultDiv = document.getElementById('docker-result');
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Loading...</span>';
+            
+            try {
+                const result = await main.App.RunSkeletonDocker();
+                updateResult('docker-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function getSupervisorCommands() {
+            const resultDiv = document.getElementById('supervisor-result');
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Loading...</span>';
+            
+            try {
+                const result = await main.App.GetSupervisorCommands();
+                updateResult('supervisor-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function getFiddlerScript() {
+            const resultDiv = document.getElementById('fiddler-result');
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Loading...</span>';
+            
+            try {
+                const result = await main.App.GetFiddlerScript();
+                resultDiv.textContent = result.output;
+                resultDiv.className = 'script-display';
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+        
+        function copyFiddlerScript() {
+            const script = document.getElementById('fiddler-result').textContent;
+            navigator.clipboard.writeText(script).then(() => {
+                alert('Script copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy: ' + err);
+            });
+        }
+        
+        async function getSystemInfo() {
+            const resultDiv = document.getElementById('system-result');
+            resultDiv.innerHTML = '<span style="color: #00d9ff;">Loading...</span>';
+            
+            try {
+                const result = await main.App.GetSystemInfo();
+                updateResult('system-result', result, result.success);
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: #ff6b6b;">Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
